@@ -11,7 +11,7 @@ Puedes instalar el script de forma muy sencilla mediante la interfaz web. Para e
 - Dale el nombre que quieras y en **Source** copia y pega el siguiente código
 editando los valores necesarios.
 
-```
+```txt
 ##############Script Settings##################
 
 :local DONDNSUser NOMBRE_DE_API_AQUI
