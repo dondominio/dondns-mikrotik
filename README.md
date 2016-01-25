@@ -1,5 +1,42 @@
 # dondns-mikrotik
+
 DonDNS para RouterOs - Mikrotik
+
+## Instalar mediante la interfaz web o winbox
+
+Puedes instalar el script de forma muy sencilla mediante la interfaz web. Para ello:
+
+- Ves a la sección **System -> Scripts**.
+- Selecciona **Add New**
+- Dale el nombre que quieras y en **Source** copia y pega el siguiente código
+editando los valores necesarios.
+
+```
+##############Script Settings##################
+
+:local DONDNSUser NOMBRE_DE_API_AQUI
+:local DONDNSPass CONTRASEÑA_DE_API_AQUI
+:local DONDNSDomain micasa.midominio.com.foo.bar
+:local WANInter pppoe-out1
+
+###############################################
+
+:local IpCurrent [/ip address get [find interface=$WANInter] address]
+:for i from=( [:len $IpCurrent] - 1) to=0 do={
+  :if ( [:pick $IpCurrent $i] = /) do={
+    :local NewIP [:pick $IpCurrent 0 $i];
+    :if ([:resolve $DONDNSDomain] != $NewIP) do={
+      /tool fetch mode=http url=http://dondns.dondominio.com/json/?user=$DONDNSUser&password=$DONDNSPass&host=$DONDNSDomain&ip=$NewIP keep-result=no
+      :log info DonDNS Update: $DONDNSDomain - $NewIP
+     }
+   }
+}
+```
+
+## Instalar mediante terminal
+
+Para instalar el actualizador de DNS en tu router **MikroTik con RouterOS** sólo tendrás
+que ejecutar el siguiente script en un terminal del router:
 
 ```
 /system script
