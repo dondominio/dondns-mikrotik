@@ -1,4 +1,4 @@
-# dondns-microtik
+# dondns-mikrotik
 DonDNS para RouterOs - Mikrotik
 
 ```
