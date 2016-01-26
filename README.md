@@ -26,7 +26,7 @@ editando los valores necesarios.
   :if ( [:pick $IpCurrent $i] = /) do={
     :local NewIP [:pick $IpCurrent 0 $i];
     :if ([:resolve $DONDNSDomain] != $NewIP) do={
-      /tool fetch mode=http url=http://dondns.dondominio.com/json/?user=$DONDNSUser&password=$DONDNSPass&host=$DONDNSDomain&ip=$NewIP keep-result=no
+      /tool fetch mode=http url=http://dondns.dondominio.com/plain/?user=$DONDNSUser&password=$DONDNSPass&host=$DONDNSDomain&ip=$NewIP keep-result=no
       :log info DonDNS Update: $DONDNSDomain - $NewIP
      }
    }
@@ -54,7 +54,7 @@ add name=DonDNS source="##############Script Settings##################\r\
     \n  :if ( [:pick \$IpCurrent \$i] = \"/\") do={\r\
     \n    :local NewIP [:pick \$IpCurrent 0 \$i];\r\
     \n    :if ([:resolve \$DONDNSDomain] != \$NewIP) do={\r\
-    \n      /tool fetch mode=http url=\"http://dondns.dondominio.com/json/\3Fuser=\$DONDNSUser&password=\$DONDNSPass&host=\$DONDNSDomain&ip=\$NewIP\" keep-result=no\r\
+    \n      /tool fetch mode=http url=\"http://dondns.dondominio.com/plain/\3Fuser=\$DONDNSUser&password=\$DONDNSPass&host=\$DONDNSDomain&ip=\$NewIP\" keep-result=no\r\
     \n      :log info \"DonDNS Update: \$DONDNSDomain - \$NewIP\"\r\
     \n     }\r\
     \n   }\r\
