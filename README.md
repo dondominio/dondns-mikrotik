@@ -14,20 +14,20 @@ editando los valores necesarios.
 ```txt
 ##############Script Settings##################
 
-:local DONDNSUser NOMBRE_DE_API_AQUI
-:local DONDNSPass CONTRASEÑA_DE_API_AQUI
-:local DONDNSDomain micasa.midominio.com.foo.bar
-:local WANInter pppoe-out1
+:local DONDNSUser "NOMBRE_DE_API_AQUI"
+:local DONDNSPass "CONTRASEÑA_DE_API_AQUI"
+:local DONDNSDomain "micasa.midominio.com.foo.bar"
+:local WANInter "pppoe-out1"
 
 ###############################################
 
 :local IpCurrent [/ip address get [find interface=$WANInter] address]
-:for i from=( [:len $IpCurrent] - 1) to=0 do={
-  :if ( [:pick $IpCurrent $i] = /) do={
+:for i from=([:len $IpCurrent] - 1) to=0 do={
+  :if ([:pick $IpCurrent $i] = "/") do={
     :local NewIP [:pick $IpCurrent 0 $i];
     :if ([:resolve $DONDNSDomain] != $NewIP) do={
-      /tool fetch mode=http url=http://dondns.dondominio.com/plain/?user=$DONDNSUser&password=$DONDNSPass&host=$DONDNSDomain&ip=$NewIP keep-result=no
-      :log info DonDNS Update: $DONDNSDomain - $NewIP
+      /tool fetch mode=https url="https://dondns.dondominio.com/plain/?user=$DONDNSUser&password=$DONDNSPass&host=$DONDNSDomain&ip=$NewIP" output=none
+      :log info "DonDNS Update: $DONDNSDomain - $NewIP"
      }
    }
 }
@@ -50,11 +50,11 @@ add name=DonDNS source="##############Script Settings##################\r\
     \n###############################################\r\
     \n\r\
     \n:local IpCurrent [/ip address get [find interface=\$WANInter] address];\r\
-    \n:for i from=( [:len \$IpCurrent] - 1) to=0 do={\r\
-    \n  :if ( [:pick \$IpCurrent \$i] = \"/\") do={\r\
+    \n:for i from=([:len \$IpCurrent] - 1) to=0 do={\r\
+    \n  :if ([:pick \$IpCurrent \$i] = \"/\") do={\r\
     \n    :local NewIP [:pick \$IpCurrent 0 \$i];\r\
     \n    :if ([:resolve \$DONDNSDomain] != \$NewIP) do={\r\
-    \n      /tool fetch mode=http url=\"http://dondns.dondominio.com/plain/\3Fuser=\$DONDNSUser&password=\$DONDNSPass&host=\$DONDNSDomain&ip=\$NewIP\" keep-result=no\r\
+    \n      /tool fetch mode=https url=\"https://dondns.dondominio.com/plain/\3Fuser=\$DONDNSUser&password=\$DONDNSPass&host=\$DONDNSDomain&ip=\$NewIP\" output=none\r\
     \n      :log info \"DonDNS Update: \$DONDNSDomain - \$NewIP\"\r\
     \n     }\r\
     \n   }\r\
